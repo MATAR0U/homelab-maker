@@ -1,0 +1,17 @@
+#!/bin/sh
+case "$1" in
+  install)
+    echo "Installation de homelab-maker"
+    ;;
+  upgrade)
+    echo "Mise à jour de homelab-maker"
+    ;;
+  uninstall)
+    echo "Désinstallation de homelab-maker"
+    ;;
+  *)
+    echo "Usage: $0 {install|upgrade|uninstall}"
+    exit 1
+    ;;
+esac
+exit 0

@@ -1,0 +1,35 @@
+{
+  "name": "homelab-maker",
+  "version": "1.0.0",
+  "description": "a tool for quickly and easily setting up your own homelab",
+  "main": "next.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MATAR0U/Homelab-maker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MATAR0U/Homelab-maker/issues"
+  },
+  "homepage": "https://github.com/MATAR0U/Homelab-maker#readme",
+  "dependencies": {
+    "modclean": "^3.0.0-beta.1",
+    "next": "^15.3.3",
+    "node-fetch": "^3.3.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "xml2js": "^0.6.2",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "depcheck": "^1.4.7"
+  }
+}

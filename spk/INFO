@@ -1,0 +1,6 @@
+package="homelab-maker"
+version="0.1.0"
+arch="x86_64"
+maintainer="MATAR0U <main@matarou.com>"
+description="Homelab Maker application"
+startable="yes"
