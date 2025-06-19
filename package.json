@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/MATAR0U/Homelab-maker#readme",
   "dependencies": {
+    "js-yaml": "^4.1.0",
     "modclean": "^3.0.0-beta.1",
     "next": "^15.3.3",
     "node-fetch": "^3.3.2",
