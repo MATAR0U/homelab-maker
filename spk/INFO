@@ -1,7 +1,0 @@
-package="homelab-maker"
-version="0.1.0"
-DownloadURL="https://shared.matarou.com/spk/homelab-maker_0.1.0.spk"
-arch="x86_64"
-maintainer="MATAR0U <main@matarou.com>"
-description="Homelab Maker application"
-startable="yes"

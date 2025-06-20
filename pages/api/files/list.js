@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const baseDir = process.env.BASE_CONFIG_DIR || '/'; // restreindre
+  const baseDir = process.env.BASE_CONFIG_DIR || '/';
   let requestedPath = req.query.path || '/';
 
   // Sécuriser le chemin (éviter ../ etc)

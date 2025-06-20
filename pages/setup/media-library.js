@@ -160,7 +160,7 @@ export default function MediaLibrarySetup() {
 
     setError(null);
     setIsDeploying(true);
-    setDeployLogs(null);
+    setDeployLogs({ status: 'En cours', stdout: '', stderr: '' });
 
     try {
       const response = await fetch('/api/deploy/local-medialibrary', {
@@ -170,21 +170,35 @@ export default function MediaLibrarySetup() {
           dockerCompose,
           configPath,
           projectName,
-          merge: mergeEnabled,   // <-- Ajout ici
+          merge: mergeEnabled,
+          selection, // <-- à ajouter ici si pas encore envoyé
         }),
       });
 
       if (!response.ok) {
-        const resultText = await response.text();
-        throw new Error(`Erreur API: ${response.status} - ${resultText}`);
+        const errorText = await response.text();
+        throw new Error(`Erreur API: ${response.status} - ${errorText}`);
       }
 
-      const result = await response.json();
-      setDeployLogs({
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let fullOutput = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value, { stream: true });
+        fullOutput += chunk;
+        setDeployLogs(prev => ({
+          ...prev,
+          stdout: (prev?.stdout || '') + chunk,
+        }));
+      }
+
+      setDeployLogs(prev => ({
+        ...prev,
         status: 'Succès',
-        stdout: result.stdout || '',
-        stderr: result.stderr || '',
-      });
+      }));
     } catch (err) {
       setDeployLogs({
         status: 'Erreur',
@@ -195,6 +209,7 @@ export default function MediaLibrarySetup() {
       setIsDeploying(false);
     }
   }
+
 
 
   function handleNext() {

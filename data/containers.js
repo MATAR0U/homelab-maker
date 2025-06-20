@@ -38,7 +38,6 @@ export const containers = {
       description: 'Client VPN avec plusieurs fournisseurs',
       container_name: 'gluetun',
       image: 'qmcgaw/gluetun:latest',
-      volumes: ['/path/to/gluetun/config:/gluetun'],
       environment: [
         'VPN_SERVICE_PROVIDER',
         'VPN_TYPE',
