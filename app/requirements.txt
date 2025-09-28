@@ -1,0 +1,7 @@
+fastapi==0.117.1
+uvicorn[standard]==0.37.0
+docker==7.1.0
+python-jose[cryptography]==3.5.0
+argon2-cffi==25.1.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.20

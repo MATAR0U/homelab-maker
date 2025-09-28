@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Login – Homelab‑Maker</title>
+    <style>
+        body {font-family: Arial, sans-serif; margin: 2rem;}
+        label {display:block; margin-bottom:0.5rem;}
+        button {margin-top:1rem; padding:0.5rem 1rem;}
+    </style>
+</head>
+<body>
+    <h2>Connexion Homelab‑Maker</h2>
+
+    <form id="login-form" method="post" action="/login">
+        <label>
+            Utilisateur :
+            <input type="text" name="username" required>
+        </label>
+        <label>
+            Mot de passe :
+            <input type="password" name="password" required>
+        </label>
+        <button type="submit">Se connecter</button>
+    </form>
+
+    <!-- -------------------------------------------------
+         Script qui intercepte le submit, récupère le JWT,
+         le stocke dans localStorage et redirige vers "/".
+         ------------------------------------------------- -->
+    <script>
+    // Nom de la clé dans le storage (vous pouvez le changer dans config.js)
+    const STORAGE_KEY = "homelab_jwt";
+
+    document.getElementById('login-form').addEventListener('submit', async ev => {
+        ev.preventDefault();                     // on ne veut pas le submit « normal »
+
+        const form = ev.target;
+        const data = new URLSearchParams();
+        data.append('username', form.username.value);
+        data.append('password', form.password.value);
+
+        try {
+            const resp = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: data
+            });
+
+            if (!resp.ok) {
+                const txt = await resp.text();
+                alert('Échec de la connexion : ' + txt);
+                return;
+            }
+
+            const json = await resp.json();      // {access_token, token_type}
+            const token = json.access_token;
+
+            // 1️⃣ stockage du token
+            localStorage.setItem(STORAGE_KEY, token);
+
+            // 2️⃣ redirection vers la page principale
+            window.location.href = '/';
+        } catch (e) {
+            console.error(e);
+            alert('Erreur réseau : ' + e);
+        }
+    });
+    </script>
+</body>
+</html>
