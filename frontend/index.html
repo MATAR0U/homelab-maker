@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Homelab‑Maker</title>
+    <style>
+        body {font-family: Arial, sans-serif; margin: 2rem;}
+        table {border-collapse: collapse; width: 100%;}
+        th, td {border: 1px solid #ddd; padding: 0.5rem; text-align: left;}
+        th {background:#f0f0f0;}
+    </style>
+</head>
+<body>
+    <h1>Homelab Maker</h1>
+    <h2>Liste des dockers</h2>
+    <button id="refresh">Actualiser la liste</button>
+    <table id="containers">
+        <thead>
+            <tr><th>ID</th><th>Nom</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

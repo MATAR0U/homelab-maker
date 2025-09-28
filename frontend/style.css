@@ -1,0 +1,99 @@
+/* ==== style.css ==== */
+
+/* ----- Reset minimal ----- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ----- Corps de la page ----- */
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                 Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    background-color: #fafafa;
+    color: #222;
+    padding: 2rem;
+}
+
+/* ----- Titre ----- */
+h1 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #2c3e50;
+}
+
+/* ----- Bouton d’actualisation ----- */
+button {
+    display: inline-block;
+    padding: 0.45rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+button:hover {
+    background-color: #2980b9;
+}
+
+/* ----- Tableau ----- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+thead {
+    background-color: #ecf0f1;
+}
+th,
+td {
+    padding: 0.75rem 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid #e1e4e8;
+}
+th {
+    font-weight: 600;
+    color: #34495e;
+}
+tbody tr:hover {
+    background-color: #f5faff;
+}
+/* Alignement vertical des cellules */
+td, th {vertical-align: middle;}
+
+/* Taille du menu déroulant */
+td select {
+    padding: .25rem .4rem;
+    font-size: .9rem;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+/* Désactiver le curseur sur les options désactivées */
+option:disabled {color: #999;}
+
+/* ----- Message d’erreur (facultatif) ----- */
+.error {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: #ffebee;
+    color: #c0392b;
+    border-left: 4px solid #e74c3c;
+    border-radius: 3px;
+}
+
+/* ----- Responsive simple ----- */
+@media (max-width: 600px) {
+    body {padding: 1rem;}
+    th, td {font-size: 0.9rem;}
+    button {font-size: 0.85rem;}
+}
