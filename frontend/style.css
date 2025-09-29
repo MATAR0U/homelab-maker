@@ -97,3 +97,78 @@ option:disabled {color: #999;}
     th, td {font-size: 0.9rem;}
     button {font-size: 0.85rem;}
 }
+
+/* -------------------------------------------------
+   Centrage de la zone principale
+------------------------------------------------- */
+.center-wrapper {
+    /* Flexbox pour centrer sur les deux axes */
+    display: flex;
+    justify-content: center;   /* centre horizontalement */
+    align-items: center;       /* centre verticalement */
+    
+    /* Prend toute la hauteur disponible */
+    min-height: 100vh;         /* 100 % de la hauteur de la fenêtre */
+    
+    /* Un petit espace autour du contenu */
+    padding: 2rem;
+    
+    /* Fond neutre (optionnel) */
+    background-color: #fafafa;
+}
+
+/* -------------------------------------------------
+   La « case » du formulaire
+------------------------------------------------- */
+.card {
+    background: #fff;                     /* fond blanc */
+    border-radius: 8px;                  /* coins arrondis */
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);/* ombre légère */
+    max-width: 420px;                    /* largeur maximale */
+    width: 100%;                         /* s’adapte aux petits écrans */
+    padding: 2rem;                       /* espace interne */
+}
+
+/* Ajuster le titre à l’intérieur de la carte */
+.card h1 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+    color: #2c3e50;
+    text-align: center;
+}
+
+/* Styles des champs du formulaire (facultatif mais agréable) */
+.card label {
+    display: block;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: #34495e;
+}
+
+.card input[type="text"],
+.card input[type="password"] {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    margin-top: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+.card button {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* -------------------------------------------------
+   Responsivité (déjà partielle dans ton CSS)
+------------------------------------------------- */
+@media (max-width: 600px) {
+    .center-wrapper {
+        padding: 1rem;
+    }
+    .card {
+        padding: 1.5rem;
+    }
+}

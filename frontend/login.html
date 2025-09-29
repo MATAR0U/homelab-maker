@@ -11,30 +11,26 @@
     </style>
 </head>
 <body>
-    <h2>Connexion Homelab‑Maker</h2>
+    <div class="center-wrapper">
+        <div class="card">
+            <h1>Connexion Homelab‑Maker</h2>
 
-    <form id="login-form" method="post" action="/login">
-        <label>
-            Utilisateur :
-            <input type="text" name="username" required>
-        </label>
-        <label>
-            Mot de passe :
-            <input type="password" name="password" required>
-        </label>
-        <button type="submit">Se connecter</button>
-    </form>
-
-    <!-- -------------------------------------------------
-         Script qui intercepte le submit, récupère le JWT,
-         le stocke dans localStorage et redirige vers "/".
-         ------------------------------------------------- -->
+            <form id="login-form" method="post" action="/login">
+                <label>
+                    Utilisateur :
+                    <input type="text" name="username" value="admin" disabled>
+                </label>
+                <label>
+                    Mot de passe :
+                    <input type="password" name="password" required>
+                </label>
+                <button type="submit">Se connecter</button>
+            </form>
+        </div>
+    </div>
     <script>
-    // Nom de la clé dans le storage (vous pouvez le changer dans config.js)
-    const STORAGE_KEY = "homelab_jwt";
-
     document.getElementById('login-form').addEventListener('submit', async ev => {
-        ev.preventDefault();                     // on ne veut pas le submit « normal »
+        ev.preventDefault();
 
         const form = ev.target;
         const data = new URLSearchParams();
@@ -54,13 +50,6 @@
                 return;
             }
 
-            const json = await resp.json();      // {access_token, token_type}
-            const token = json.access_token;
-
-            // 1️⃣ stockage du token
-            localStorage.setItem(STORAGE_KEY, token);
-
-            // 2️⃣ redirection vers la page principale
             window.location.href = '/';
         } catch (e) {
             console.error(e);

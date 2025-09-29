@@ -130,7 +130,7 @@ function renderContainers(list) {
 // ---------- Appel API pour la liste ----------
 async function fetchContainers() {
     try {
-        const resp = await fetch('/containers', { headers: apiHeaders() });
+        const resp = await fetch('/api/containers', { headers: apiHeaders() });
         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
         const data = await resp.json();
         renderContainers(data);
@@ -142,7 +142,7 @@ async function fetchContainers() {
 // ---------- POST action ----------
 async function performAction(containerId, action) {
     try {
-        const resp = await fetch(`/containers/${containerId}/action`, {
+        const resp = await fetch(`/api/containers/${containerId}/action`, {
             method: 'POST',
             headers: apiHeaders(),
             body: JSON.stringify({ action })
