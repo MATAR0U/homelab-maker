@@ -1,7 +1,9 @@
 # Homelab-maker
 
-Un outil pour déployer rapidement et facilement votre homelab personnalisé
+> :fr: [Readme en français](./README_FR.md)
+
+A tool to deploy and control multiple docker for your custom homelab
 
 ### License
 
-Ce projet est soumis à la licence [Apache License 2.0](./LICENSE) © 2025 MATAR0U.
+This project is subject to the license [Apache License 2.0](./LICENSE) © 2025 MATAR0U.

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Register – Homelab‑Maker</title>
+    <style>
+        body {font-family: Arial, sans-serif; margin: 2rem;}
+        label {display:block; margin-bottom:0.5rem;}
+        button {margin-top:1rem; padding:0.5rem 1rem;}
+    </style>
+</head>
+<body>
+    <div class="center-wrapper">
+        <div class="card">
+            <h1>Création du mot de passe</h2>
+
+            <form id="register-form" method="post" action="/register">
+                <label>
+                    Utilisateur :
+                    <input type="text" name="username" value="admin" disabled>
+                </label>
+                <label>
+                    Mot de passe :
+                    <input type="password" name="password" required>
+                </label>
+                <button type="submit">Créer le mot de passe</button>
+            </form>
+        </div>
+    </div>
+    <script>
+    document.getElementById('register-form').addEventListener('submit', async ev => {
+        ev.preventDefault();
+
+        const form = ev.target;
+        const data = new URLSearchParams();
+        data.append('username', form.username.value);
+        data.append('password', form.password.value);
+
+        try {
+            const resp = await fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: data
+            });
+
+            if (!resp.ok) {
+                const txt = await resp.text();
+                alert('Échec de la création du mot de passe : ' + txt);
+                return;
+            }
+
+            window.location.href = '/';
+        } catch (e) {
+            console.error(e);
+            alert('Erreur réseau : ' + e);
+        }
+    });
+    </script>
+</body>
+</html>

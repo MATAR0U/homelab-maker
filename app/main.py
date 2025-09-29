@@ -11,6 +11,7 @@ import pathlib
 from passlib.context import CryptContext
 import xml.etree.ElementTree as ET
 import threading
+import configparser
 
 # ------------------------------------------------------------
 # Variable config
@@ -19,11 +20,12 @@ import threading
 _xml_lock = threading.Lock()
 CONFIG_PATH = pathlib.Path("/config/config.xml")
 
-def update_settings():
-    global USERNAME, PWD_HASH, JWT_SECRET_KEY, JWT_ALGORITHM, JWT_EXPIRE_MINUTES, REGISTER
+def config_settings(action, data={}):
+    global CONFIG_PATH, JWT_SECRET_KEY, JWT_ALGORITHM, JWT_EXPIRE_MINUTES
     # ------------------------------------------------------------
-    # Define global variable
+    # Define general variable
     # ------------------------------------------------------------
+
     if not CONFIG_PATH.is_file():
         raise FileNotFoundError(f"Fichier de configuration introuvable : {CONFIG_PATH}")
 
@@ -36,20 +38,31 @@ def update_settings():
 
     USERNAME       = _text(root.find("./auth/username"))
     PWD_HASH       = _text(root.find("./auth/pwd_hash"))
-    JWT_SECRET_KEY = _text(root.find("./jwt/secret_key"))
     JWT_ALGORITHM  = _text(root.find("./jwt/algorithm"))
     JWT_EXPIRE_MINUTES = int(_text(root.find("./jwt/expire_minutes")))
 
 
+    SOURCE_FILE=configparser.ConfigParser()
+    SOURCE_FILE.read("/config/.source.ini")
+    JWT_SECRET_KEY=SOURCE_FILE.get('secret','jwt_secret_key')
+
     if not USERNAME or not JWT_SECRET_KEY:
         raise ValueError("Configuration invalide : username ou secret_key manquant.")
 
-    if PWD_HASH == "blank":
-        REGISTER = False
-    else:
-        REGISTER = True
+    # ------------------------------------------------------------
 
-update_settings()
+    match action:
+        case "verif_auth":
+            if data["username"] != USERNAME or not verify_password(data["password"], PWD_HASH):
+                return True
+            else:
+                return False
+        case "is_registred":
+            print(PWD_HASH)
+            if PWD_HASH == "blank":
+                return False
+            else:
+                return True
 
 # ----------------------------------------------------------------------
 # Load XML or return error
@@ -79,7 +92,6 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login")
 
 
 def verify_password(plain_pwd: str, hashed_pwd: str) -> bool:
-    """Vérifie le mot de passe en laissant passlib gérer la troncature."""
     return pwd_context.verify(plain_pwd, hashed_pwd)
 
 
@@ -117,7 +129,6 @@ app = FastAPI()
 # ------------------------------------------------------------
 @app.middleware("http")
 async def auth_middleware(request: Request, call_next):
-    update_settings()
 
     path = request.url.path
 
@@ -149,7 +160,8 @@ async def auth_middleware(request: Request, call_next):
     # -----------------------------------------------------------------
     # No valide token, redirect to /login
     # -----------------------------------------------------------------
-    if REGISTER:
+    print(config_settings("is_registred"))
+    if config_settings("is_registred"):
         return RedirectResponse(url="/login", status_code=302)
     else:
         return RedirectResponse(url="/register", status_code=302)
@@ -226,10 +238,10 @@ def login_page():
 # ------------------------------------------------------------
 @app.post("/login")
 def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    if form_data.username != USERNAME or not verify_password(form_data.password, PWD_HASH):
+    if not config_settings("verif_auth",{"username":form_data.username,"password":form_data.password}):
         raise HTTPException(status_code=400, detail="Identifiants invalides")
 
-    access_token = create_access_token(data={"sub": USERNAME})
+    access_token = create_access_token(data={"sub": form_data.username})
 
     response = JSONResponse(content={"access_token": access_token, "token_type": "bearer"})
 
