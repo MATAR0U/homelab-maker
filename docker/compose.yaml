@@ -10,17 +10,6 @@ services:
       - "8000:8000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ../config:/config:rw
     environment:
       - PYTHONUNBUFFERED=1
-      - HOMELAB_USER=admin
-#python - <<'PY'
-#from passlib.context import CryptContext
-#pwd_ctx = CryptContext(schemes=["argon2"])
-#plain = "securepassword"
-#hashed = pwd_ctx.hash(plain)
-#print(hashed)
-#PY
-      - HOMELAB_PASSWORD_HASH=$$argon2id$$v=19$$m=65536,t=3,p=4$$wlgLwfj/v3funZMS4lxLKQ$$y+k8+H4FO2T5ysrGOZCm/+R2bunRHAvFCH9hjBghs28
-      - JWT_SECRET_KEY=N94T4D67B6K3MW3L36TN
-      - JWT_ALGORITHM=HS256
-      - JWT_EXPIRE_MINUTES=60
